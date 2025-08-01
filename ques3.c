@@ -1,26 +1,41 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/wait.h>
+#include<stdio.h>
+#include<unistd.h>
+#include<sys/types.h>
+#include<sys/wait.h>
+#include<stdlib.h>
 
-int main() {
-    pid_t child1 = fork();
 
-    if (child1 == 0) {
-        printf("First Child (PID %d): Sleeping...\n", getpid());
-        sleep(5);
-        printf("First Child: Parent PID after sleep = %d (Should be 1 or reaper if orphaned)\n", getppid());
-        exit(0);
-    } else {
-        pid_t child2 = fork();
-        if (child2 == 0) {
-            printf("Second Child (PID %d): Exiting immediately.\n", getpid());
-            exit(0);
-        } else {
-            printf("Parent (PID %d): Exiting before first child completes.\n", getpid());
-            exit(0); 
-        }
-    }
-
-    return 0;
+int main(){
+   pid_t pid=fork();
+      if(pid>0){
+       wait(NULL);
+       printf("%d\n",getpid());
+       printf("Parent Process complete\n");
+   }
+   else if(pid==0){
+       printf("%d\n",getpid());
+       printf("Child Process\n");
+       execlp("ls","ls","-l",(char*)NULL);
+       exit(0);
+   }
+   else{
+      printf("Process not created\n");
+   }
+   printf("ORPHAN PROBLEM\n");
+   pid_t x=fork();
+   if(x>0){
+       wait(NULL);
+       printf("%d\n",getpid());
+       printf("Parent Process complete\n");
+   }
+   else if(x==0){
+       printf("%d\n",getpid());
+       printf("Child Process\n");
+       execlp("ls","ls","-l",(char*)NULL);
+       exit(0);
+   }
+   else{
+      printf("Process not created\n");
+   }
+return 0;
 }
