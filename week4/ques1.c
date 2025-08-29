@@ -100,7 +100,7 @@ int main()
     printf("\nAverage Waiting Time     = %.2f", sum_wt / n); 
     printf("\nAverage Response Time    = %.2f", sum_rt / n); 
     printf("\nThroughput               = %.2f", n / (float)length_cycle); 
-    printf("\nCPU Utilization (%%)      = %.2f\n", cpu_utilization * 100); 
+    printf("\nCPU Utilization (%%)     = %.2f\n", cpu_utilization * 100); 
  
     return 0; 
 } 
